@@ -76,11 +76,4 @@ public class App {
         });
         // System.out.println("Fim");
     }
-
-    /*
-     * Programas comuns em Java são Single thread
-     * Mas eles podem ser multi thread
-     * O Swing cria uma thread para cada janela
-     * Inversão de controle
-     */
 }
