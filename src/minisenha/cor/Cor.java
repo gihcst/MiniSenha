@@ -1,14 +1,15 @@
+package minisenha.cor;
+
 import java.awt.Color;
+import java.nio.file.Paths;
 
 public class Cor {
     private String nomeCor;
     private Color cor;
-    private String caminho;
 
-    public Cor(String nomeCor, Color cor, String caminho) {
+    public Cor(String nomeCor, Color cor) {
         this.nomeCor = nomeCor;
         this.cor = cor;
-        this.caminho = caminho;
     }
 
     public String getNomeCor() {
@@ -20,7 +21,7 @@ public class Cor {
     }
 
     public String getImageCaminho() {
-        return caminho;
+        return Paths.get("res", this.nomeCor + ".png").toString();
     }
 
     public String toString(){

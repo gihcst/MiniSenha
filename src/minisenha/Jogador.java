@@ -1,6 +1,6 @@
- 
+package minisenha; 
 
-class Jogador {
+public class Jogador {
 
     private String nome;
     private int pontuacao;
@@ -13,6 +13,11 @@ class Jogador {
     public Jogador(String nome) {
         this.nome = nome;
         this.pontuacao = 0;
+    }
+
+    public Jogador(int pontuacao) {
+        this.nome = "";
+        this.pontuacao = pontuacao;
     }
 
     public Jogador(String nome, int pontuacao) {
@@ -32,8 +37,12 @@ class Jogador {
         this.pontuacao = pontuacao;
     }
 
-    public void adicionarPontuacao(int pontuacao) {
-        this.pontuacao += pontuacao;
+    public void adicionarPontuacao(int pontos) {
+        this.pontuacao += pontos;
+    }
+
+    public void subtrairPontuacao(int pontos) {
+        this.pontuacao -= pontos;
     }
 
     public void setNome(String nome) {

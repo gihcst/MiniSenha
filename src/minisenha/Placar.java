@@ -1,3 +1,5 @@
+package minisenha;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -5,23 +7,19 @@ import java.io.PrintWriter;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
-public class Placar {
+public final class Placar {
 
-    private final int TAMANHO_MAXIMO = 5;
-    private final String caminho = Paths.get("res", "placar.csv").toString();
+    private static final int TAMANHO_MAXIMO = 5;
+    private static final String CAMINHO_ARQUIVO = Paths.get("res", "placar.csv").toString();
 
-    private ArrayList<Jogador> scores;
+    private static ArrayList<Jogador> scores = new ArrayList<Jogador>();
 
-    public Placar() {
-        scores = new ArrayList<Jogador>();
-    }
-
-    public String carregar() {
+    public static String carregar() {
         // Inicializa o StringBuilder
         StringBuilder inicializa = new StringBuilder();
 
         // Usa a classe BufferedReader para fazer a leitura do arquivo
-        try (BufferedReader br = new BufferedReader(new FileReader(caminho))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(CAMINHO_ARQUIVO))) {
             String line;
             while ((line = br.readLine()) != null) {
                 inicializa.append(line).append("\n");
@@ -49,7 +47,7 @@ public class Placar {
      * @param pontuacao
      * @return void
      */
-    public void adicionar(Jogador jogador) {
+    public static void adicionar(Jogador jogador) {
         // adiciona novo jogador
         scores.add(jogador);
         
@@ -67,9 +65,9 @@ public class Placar {
      * para escrever no arquivo "placar.csv"
      * o mesmo apenas escreve, não faz verificação.
      */
-    private void salvar() {
+    private static void salvar() {
         try {
-            PrintWriter out = new PrintWriter(caminho);
+            PrintWriter out = new PrintWriter(CAMINHO_ARQUIVO);
 
             for (Jogador jogador : scores) {
                 out.printf("%s;%d\n", jogador.getNome(), jogador.getPontuacao());
