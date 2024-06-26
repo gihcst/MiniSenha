@@ -129,7 +129,7 @@ public class TelaJogo extends Tela {
         painelDeControle.add(lbConfig);
 
         JButton btSair = new JButton("Sair");
-        btSair.addActionListener(e -> System.exit(0));
+        btSair.addActionListener(e -> app.mostrarMenu());
         painelDeControle.add(btSair);
 
         painelDeControle.add(pontosLabel);
