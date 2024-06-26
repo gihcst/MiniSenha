@@ -9,66 +9,65 @@ import java.util.ArrayList;
 
 public final class Placar {
 
-    private static final int TAMANHO_MAXIMO = 5;
-    private static final String CAMINHO_ARQUIVO = Paths.get("res", "placar.csv").toString();
+    private static final int TAMANHO_MAXIMO = 5; // Tamanho máximo do placar
+    private static final String CAMINHO_ARQUIVO = Paths.get("res", "placar.csv").toString(); // Caminho do arquivo CSV
 
-    private static ArrayList<Jogador> scores = new ArrayList<Jogador>();
+    private static ArrayList<Jogador> scores = new ArrayList<Jogador>(); // Lista de jogadores e suas pontuações
 
+    /**
+     * Carrega os dados do placar a partir do arquivo CSV.
+     * 
+     * @return Uma string contendo o conteúdo carregado do arquivo.
+     */
     public static String carregar() {
-        // Inicializa o StringBuilder
-        StringBuilder inicializa = new StringBuilder();
+        StringBuilder placarCarregado = new StringBuilder();
 
-        // Usa a classe BufferedReader para fazer a leitura do arquivo
         try (BufferedReader br = new BufferedReader(new FileReader(CAMINHO_ARQUIVO))) {
             String line;
             while ((line = br.readLine()) != null) {
-                inicializa.append(line).append("\n");
+                placarCarregado.append(line).append("\n");
                 String[] campos = line.split(";");
                 if (campos.length != 2) {
-                    System.out.println("> Numero invalido de campos no arquivo CSV...");
+                    System.out.println("> Número inválido de campos no arquivo CSV...");
                 } else {
                     scores.add(new Jogador(campos[0], Integer.parseInt(campos[1])));
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
-            // Indica que houve um erro na leitura
+            // Tratamento de erro na leitura do arquivo
         }
 
-        return inicializa.toString();
+        return placarCarregado.toString();
     }
 
     /**
-     * o metodo adiciona verifica se ha espaço no arquivo
-     * se houver ele salva o nome e pontuação do usuario no arquivo "placar.csv"
-     * ele tambem é usado no metodo "salvar"
+     * Adiciona um jogador ao placar, ordenando e limitando o tamanho máximo.
+     * Em seguida, salva o placar atualizado no arquivo CSV.
      * 
-     * @param nome
-     * @param pontuacao
-     * @return void
+     * @param jogador O jogador a ser adicionado ao placar.
      */
     public static void adicionar(Jogador jogador) {
-        // adiciona novo jogador
-        scores.add(jogador);
-        
-        // ordena do maior para o menor
+        scores.add(jogador); // Adiciona o novo jogador
+
+        // Ordena os jogadores por pontuação (decrescente)
         scores.sort((a, b) -> b.getPontuacao() - a.getPontuacao());
 
-        // remove o ultimo jogador, com menor pontuação
-        if (scores.size() > TAMANHO_MAXIMO) scores.remove(scores.size() - 1);
+        // Remove o último jogador se o placar ultrapassar o tamanho máximo
+        if (scores.size() > TAMANHO_MAXIMO)
+            scores.remove(scores.size() - 1);
 
-        salvar();
+        salvar(); // Salva o placar atualizado no arquivo
     }
 
     /**
-     * o metodo salvar usa a classe "PrintWriter"(própria do java)
-     * para escrever no arquivo "placar.csv"
-     * o mesmo apenas escreve, não faz verificação.
+     * Salva os dados atuais do placar no arquivo CSV.
      */
     private static void salvar() {
         try {
             PrintWriter out = new PrintWriter(CAMINHO_ARQUIVO);
 
+            // Escreve cada jogador no arquivo no formato "nome;pontuacao"
             for (Jogador jogador : scores) {
                 out.printf("%s;%d\n", jogador.getNome(), jogador.getPontuacao());
             }

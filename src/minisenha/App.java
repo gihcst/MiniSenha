@@ -9,44 +9,46 @@ public class App {
     
     private Jogador jogador;
 
-	private Tela telaMenu;
+    private Tela telaMenu;
     private Tela telaJogo;
     private Tela telaPlacar;
 
     public App() {
-        jogador = new Jogador();
+        jogador = new Jogador(); // Inicializa o jogador
+
+        // Inicializa as telas do jogo passando esta instância de App como parâmetro
         telaMenu = new TelaMenu(this);
         telaJogo = new TelaJogo(this);
         telaPlacar = new TelaPlacar(this);
     }
 
     public Jogador getJogador() {
-		return jogador;
-	}
+        return jogador;
+    }
 
     public void mostrarMenu() {
-        telaMenu.mostrar();
-        telaJogo.esconder();
-        telaPlacar.esconder();
+        telaMenu.mostrar(); // Mostra a tela do menu
+        telaJogo.esconder(); // Esconde a tela do jogo
+        telaPlacar.esconder(); // Esconde a tela do placar
     }
 
     public void mostrarJogo() {
-        telaJogo.mostrar();
-        telaMenu.esconder();
-        telaPlacar.esconder();
+        telaJogo.mostrar(); // Mostra a tela do jogo
+        telaMenu.esconder(); // Esconde a tela do menu
+        telaPlacar.esconder(); // Esconde a tela do placar
     }
 
     public void mostrarPlacar() {
-        telaPlacar.mostrar();
-        telaMenu.esconder();
-        telaJogo.esconder();
+        telaPlacar.mostrar(); // Mostra a tela do placar
+        telaMenu.esconder(); // Esconde a tela do menu
+        telaJogo.esconder(); // Esconde a tela do jogo
     }
 
     public void fechar() {
-        telaMenu.fechar();
-        telaJogo.fechar();
-        telaPlacar.fechar();
-        System.exit(0);
+        telaMenu.fechar(); // Fecha a tela do menu
+        telaJogo.fechar(); // Fecha a tela do jogo
+        telaPlacar.fechar(); // Fecha a tela do placar
+        System.exit(0); // Encerra a aplicação
     }
 
 }
