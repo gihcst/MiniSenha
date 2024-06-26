@@ -72,15 +72,14 @@ public class App {
     public void criaJanelaJogo() {
         Jogo = new JFrame("Jogo");
 
-        JButton[] botoes = new JButton[6];
+        JButton[] botoes = new JButton[5];
         botoes[0] = new JButton("Amarelo");
         botoes[1] = new JButton("Vermelho");
         botoes[2] = new JButton("Azul");
         botoes[3] = new JButton("Verde");
         botoes[4] = new JButton("Laranja");
-        botoes[5] = new JButton("Roxo");
 
-        Color[] cores = { Color.YELLOW, Color.RED, Color.BLUE, Color.GREEN, Color.ORANGE, Color.MAGENTA };
+        Color[] cores = { Color.YELLOW, Color.RED, Color.BLUE, Color.GREEN, Color.ORANGE };
 
         quadrados = new JPanel[4];
         for (int i = 0; i < 4; i++) {
@@ -96,7 +95,7 @@ public class App {
 
         JPanel painelDeBotoes = new JPanel();
         painelDeBotoes.setLayout(new FlowLayout());
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 5; i++) {
             int index = i;
             botoes[i].addActionListener(e -> mudarCorQuadrado(cores[index]));
             painelDeBotoes.add(botoes[i]);
@@ -112,11 +111,14 @@ public class App {
         painelDeControle.setLayout(new BoxLayout(painelDeControle, BoxLayout.PAGE_AXIS));
         JLabel lbConfig = new JLabel("Controles");
         JButton btVerificar = new JButton("Verificar");
-        btVerificar.addActionListener(e -> verifica());
-        JButton btSair = new JButton("Sair");
+        btVerificar.addActionListener(e -> verificarSequenciaAtual());
+        JButton btDesfazer = new JButton("Desfazer");
+        btDesfazer.addActionListener(e -> desfazerUltimoPasso());
+        JButton btSair = new JButton("Desistir");
         btSair.addActionListener(e -> System.exit(0));
         painelDeControle.add(lbConfig);
         painelDeControle.add(btVerificar);
+        painelDeControle.add(btDesfazer);
         painelDeControle.add(btSair);
         painelDeControle.add(pontosLabel); // Adiciona a label de pontuação
 
@@ -142,7 +144,17 @@ public class App {
             sequenciaAtual[count] = cor;
             count++;
         }
+    }
 
+    private void desfazerUltimoPasso() {
+        if (count > 0) {
+            count--;
+            quadrados[count].setBackground(Color.GRAY);
+            sequenciaAtual[count] = null;
+        }
+    }
+
+    private void verificarSequenciaAtual() {
         if (count == 4) {
             if (verificarSequencia()) {
                 JOptionPane.showMessageDialog(Jogo, "Vitória! Pontuação: " + pontos, "Resultado",
@@ -167,7 +179,6 @@ public class App {
         }
     }
 
-    // mudar talvez
     private boolean verificarSequencia() {
         for (int i = 0; i < 4; i++) {
             if (!sequenciaAtual[i].equals(sequenciaCorreta[i])) {
@@ -185,7 +196,6 @@ public class App {
         count = 0;
     }
 
-    // mudar para funcionar com botao verificar
     private void adicionarRodadaAnterior(Color[] sequencia) {
         JPanel rodadaContainer = new JPanel();
         rodadaContainer.setLayout(new FlowLayout());
@@ -257,12 +267,6 @@ public class App {
         Jogo.dispose(); // Fecha a janela do jogo
         Menu.dispose(); // Fecha a janela do menu
         System.exit(0); // Encerra a aplicação
-    }
-
-    public void verifica() {
-        if (count == 4) {
-            mudarCorQuadrado(sequenciaAtual[count - 1]);
-        }
     }
 
     public static void main(String[] args) {
